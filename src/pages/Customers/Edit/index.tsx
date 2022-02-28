@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 import axios from "axios";
 import Button from "../../../components/Button";
@@ -17,17 +17,18 @@ import {
   SubmitButton,
   Title,
   UserInfo,
-  LogOutContainer,
 } from "./styles";
 import api from "../../../services/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { LogOutContainer } from "../Create/styles";
 import LogOutButton from "../../../components/LogOutButton";
 
 interface Errors {
   [key: string]: string;
 }
 
-type Data = {
+type Customer = {
+  id: string;
   cpf: string;
   email: string;
   nome: string;
@@ -40,12 +41,17 @@ type Data = {
   };
 };
 
-const CustomersCreate: React.FC = ({}) => {
+type Response = { data: Customer };
+
+const CustomersEdit: React.FC = ({}) => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const { createToast, removeToast } = useToast();
+  const { id }: any = useParams();
 
-  const handleSubmit = async (data: Data) => {
+  const [customer, setCustomer] = useState<Customer>({} as Customer);
+
+  const handleSubmit = async (data: Customer) => {
     try {
       console.log("data", data);
       formRef.current?.setErrors({});
@@ -62,7 +68,7 @@ const CustomersCreate: React.FC = ({}) => {
 
       createToast("Carregando...", "loading");
 
-      await api.post("/clientes", data);
+      await api.put(`/clientes/${id}`, data);
 
       removeToast();
 
@@ -105,6 +111,27 @@ const CustomersCreate: React.FC = ({}) => {
     history.push("/home");
   }
 
+  useEffect(() => {
+    try {
+      api.get(`/clientes/${id}`).then(({ data }: Response) => {
+        setCustomer(data);
+
+        formRef.current?.setData({
+          nome: data.nome,
+          email: data.email,
+          cpf: data.cpf,
+          endereco: {
+            cep: data.endereco.cep,
+            rua: data.endereco.rua,
+            numero: data.endereco.numero,
+            bairro: data.endereco.bairro,
+            cidade: data.endereco.cidade,
+          },
+        });
+      });
+    } catch (error) {}
+  }, []);
+
   return (
     <Container>
       <Sidebar />
@@ -112,7 +139,7 @@ const CustomersCreate: React.FC = ({}) => {
       <Content>
         <FormContainer onSubmit={handleSubmit} ref={formRef}>
           <Header>
-            <Title>Criar Cliente</Title>
+            <Title>Atualizar de Cliente</Title>
             <RiFileListFill
               size={28}
               color="#E6FFFA"
@@ -174,4 +201,4 @@ const CustomersCreate: React.FC = ({}) => {
   );
 };
 
-export default CustomersCreate;
+export default CustomersEdit;

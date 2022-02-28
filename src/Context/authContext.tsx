@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useState, useContext } from "react";
 
 import api from "../services/api";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router-dom";
 
 type User = {
   email: string;
@@ -17,6 +18,7 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const history = useHistory();
   const [token, setToken] = useState<string>(() => {
     const token = localStorage.getItem("token") || "";
 
@@ -35,11 +37,13 @@ export const AuthProvider: React.FC = ({ children }) => {
     setToken(token);
   };
 
-  const signOut = useCallback(() => {
+  const signOut = () => {
     localStorage.removeItem("token");
 
     setToken("");
-  }, []);
+
+    history.push("/");
+  };
 
   return (
     <AuthContext.Provider

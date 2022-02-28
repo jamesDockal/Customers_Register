@@ -4,11 +4,17 @@ import { Container } from "./styles";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   backgroundColor: string;
+  size?: "md" | "lg";
 }
 
-const Button: React.FC<Props> = ({ backgroundColor, children, ...rest }) => {
+const Button: React.FC<Props> = ({
+  backgroundColor,
+  children,
+  size = "lg",
+  ...rest
+}) => {
   return (
-    <Container backgroundColor={backgroundColor} {...rest}>
+    <Container backgroundColor={backgroundColor} size={size} {...rest}>
       {children}
     </Container>
   );

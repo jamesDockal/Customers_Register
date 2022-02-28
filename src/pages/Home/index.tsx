@@ -7,6 +7,7 @@ import {
   Content,
   Header,
   LeftContainer,
+  LogOutContainer,
   RightContent,
   Rows,
   Title,
@@ -14,6 +15,7 @@ import {
 import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import { useToast } from "../../Context/toastContext";
+import LogOutButton from "../../components/LogOutButton";
 
 type Customer = {
   id: string;
@@ -62,7 +64,7 @@ const Home: React.FC = ({}) => {
       <LeftContainer>
         <Content>
           <Header>
-            <Title>Cadastrar Cliente</Title>
+            <Title>Listagem de Clientes</Title>
             <BsFillPlusSquareFill
               size={28}
               color="#E6FFFA"
@@ -82,7 +84,11 @@ const Home: React.FC = ({}) => {
           </Rows>
         </Content>
       </LeftContainer>
-      <RightContent></RightContent>
+      <RightContent>
+        <LogOutContainer>
+          <LogOutButton />
+        </LogOutContainer>
+      </RightContent>
     </Container>
   );
 };

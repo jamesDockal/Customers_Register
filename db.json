@@ -122,7 +122,31 @@
       "email": "james@gmaail.com",
       "password": "12234",
       "id": "cb5d30b1-3472-4c46-83b2-f55b83a5ee25"
+    },
+    {
+      "email": "james@gmail.com",
+      "password": "1233",
+      "id": "9f5d74ed-390d-4c2c-be3a-8110eacf5a3d"
+    },
+    {
+      "email": "jamesdockal@gmail.com",
+      "password": "1233",
+      "id": "76e75d60-1705-4b6a-b20c-d5093ce68da4"
     }
   ],
-  "clientes": []
+  "clientes": [
+    {
+      "nome": "1234",
+      "email": "123@gmail.com",
+      "cpf": "123",
+      "endereco": {
+        "cep": "13",
+        "rua": "123",
+        "numero": "123",
+        "bairro": "123",
+        "cidade": "123"
+      },
+      "id": 1
+    }
+  ]
 }

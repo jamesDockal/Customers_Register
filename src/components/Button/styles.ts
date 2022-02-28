@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   backgroundColor: string;
+  size: "md" | "lg";
 }
 
 export const Container = styled.button<Props>`
@@ -9,7 +10,7 @@ export const Container = styled.button<Props>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   width: 100%;
   text-align: center;
-  padding: 12px 0px;
+  height: ${({ size }) => (size === "md" ? "40px" : "56px")};
   border-radius: 6px;
   border: none;
 

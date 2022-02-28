@@ -25,14 +25,15 @@ const Route: React.FC<RouteProps> = ({
   return (
     <ReactDOMRoute
       {...rest}
-      render={({ location }) => {
-        return !!token ? (
+      render={() => {
+        return !isPrivate ? (
+          <Component />
+        ) : !!token ? (
           <Component />
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? "/" : "/dashboard",
-              state: { from: location },
+              pathname: "/",
             }}
           />
         );

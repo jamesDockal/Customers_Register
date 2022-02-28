@@ -53,7 +53,7 @@ const Login: React.FC = ({}) => {
 
       await schema.validate(data, { abortEarly: false });
 
-      createToast("Loading...", "loading");
+      createToast("Carregando...", "loading");
 
       await signIn(data);
 

@@ -1,8 +1,7 @@
 import React from "react";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { useToast } from "../../Context/toastContext";
-import api from "../../services/api";
+import { useHistory } from "react-router-dom";
 
 import { Container, Delete, Edit, Functions, Title } from "./styles";
 
@@ -26,6 +25,12 @@ type Props = {
 };
 
 const Row: React.FC<Props> = ({ customer, handleDelete }) => {
+  const history = useHistory();
+
+  function handleEdit(id: string) {
+    history.push(`/customers/edit/${id}`);
+  }
+
   return (
     <Container>
       <Title>{customer.nome}</Title>
@@ -37,7 +42,7 @@ const Row: React.FC<Props> = ({ customer, handleDelete }) => {
         <Delete onClick={() => handleDelete(customer.id)}>
           <AiFillDelete color="#FFF5F5" size={20} />
         </Delete>
-        <Edit>
+        <Edit onClick={() => handleEdit(customer.id)}>
           <AiFillEdit color="#FFF5F5" size={20} />
         </Edit>
       </Functions>

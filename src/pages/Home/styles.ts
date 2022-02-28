@@ -9,6 +9,7 @@ export const LeftContainer = styled.div`
   width: 67vw;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 export const Content = styled.div`
@@ -45,4 +46,11 @@ export const RightContent = styled.div`
 
 export const Rows = styled.div`
   /* overflow-x: hidden; */
+`;
+
+export const LogOutContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateY(-50%);
 `;

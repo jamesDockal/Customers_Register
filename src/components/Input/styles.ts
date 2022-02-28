@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 type InputProps = {
   isErrored: boolean;
+  hasIcon: boolean;
+};
+
+type LabelProps = {
+  hasIcon: boolean;
 };
 
 export const InputElement = styled.input<InputProps>`
@@ -14,15 +19,15 @@ export const InputElement = styled.input<InputProps>`
 
   border-radius: 4px;
   padding: 10px 0px;
-  padding-left: 46px;
+  padding-left: ${({ hasIcon }) => (hasIcon ? "46px" : "8px")};
   color: #2c7a7b;
   font-weight: bold;
 `;
 
-export const Label = styled.label`
+export const Label = styled.label<LabelProps>`
   position: absolute;
   transition: 0.3s all ease;
-  margin-left: 46px;
+  padding-left: ${({ hasIcon }) => (hasIcon ? "46px" : "8px")};
   color: #2c7a7b;
   font-weight: bold;
 `;
