@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-export const LoginElement = styled.input`
+type InputProps = {
+  isErrored: boolean;
+};
+
+export const InputElement = styled.input<InputProps>`
   width: 100%;
   background-color: white;
-  border: none;
   outline: none;
 
-  border: 2px solid #111111;
+  border: ${({ isErrored }) =>
+    isErrored ? "2px solid #E53E3E" : "2px solid #111111"};
+
   border-radius: 4px;
   padding: 10px 0px;
   padding-left: 46px;
@@ -30,8 +35,8 @@ export const Container = styled.div`
   align-items: center;
   position: relative;
 
-  ${LoginElement}:valid ~ ${Label},
-  ${LoginElement}:focus ~ ${Label} {
+  ${InputElement}:valid ~ ${Label},
+  ${InputElement}:focus ~ ${Label} {
     transform: translateY(-32px);
     font-size: 0.9rem;
     color: red;

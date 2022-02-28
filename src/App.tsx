@@ -1,11 +1,20 @@
 import React from "react";
-import Login from "./pages/Login";
+import { BrowserRouter } from "react-router-dom";
+
+import { AuthProvider } from "./Context/authContext";
+import { ToastProvider } from "./Context/toastContext";
+
+import Routes from "./routes";
 
 function App() {
   return (
-    <div>
-      <Login />
-    </div>
+    <AuthProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </ToastProvider>
+    </AuthProvider>
   );
 }
 

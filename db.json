@@ -1,0 +1,25 @@
+{
+  "usuarios": [
+    {
+      "email": "teste@emaill.com.br",
+      "password": "123456",
+      "token": "token"
+    },
+    {
+      "email": "james@dockal.com",
+      "password": "1233",
+      "id": "01f58078-1001-4089-8c96-1031b8e01c94"
+    },
+    {
+      "email": "jamesdockal@gmail.com",
+      "password": "123123",
+      "id": "8d9c7e77-0476-46d7-900a-33185295c726"
+    },
+    {
+      "email": "jamesdockal@gmail.com",
+      "password": "143234",
+      "id": "c47fd9a3-4fd6-4d61-8509-2f4e41c0a463"
+    }
+  ],
+  "clientes": []
+}

@@ -3,7 +3,7 @@ import React, { InputHTMLAttributes, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons/lib";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
-import { Container, Label, LoginElement } from "./styles";
+import { Container, Label, InputElement } from "./styles";
 import { useField } from "@unform/core";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -45,14 +45,15 @@ const Input: React.FC<Props> = ({ name, label, icon: Icon, ...rest }) => {
         color="#EBF8FF"
         style={{
           position: "absolute",
-          backgroundColor: "#111111",
+          backgroundColor: error ? "#E53E3E" : "#111111",
           borderTopLeftRadius: 6,
           borderBottomLeftRadius: 6,
           height: "100%",
           width: 38,
         }}
       />
-      <LoginElement
+      <InputElement
+        isErrored={!!error}
         required
         ref={inputRef}
         defaultValue={defaultValue}

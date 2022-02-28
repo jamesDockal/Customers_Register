@@ -11,6 +11,7 @@ export const Container = styled.button<Props>`
   text-align: center;
   padding: 12px 0px;
   border-radius: 6px;
+  border: none;
 
   &:hover {
     filter: opacity(0.9);
