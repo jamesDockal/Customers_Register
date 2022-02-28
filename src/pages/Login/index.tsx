@@ -20,6 +20,7 @@ import {
 } from "./styles";
 import { useToast } from "../../Context/toastContext";
 import { useAuth } from "../../Context/authContext";
+import { useHistory } from "react-router-dom";
 
 interface Errors {
   [key: string]: string;
@@ -33,9 +34,9 @@ type Data = {
 const Login: React.FC = ({}) => {
   const formRef = useRef<FormHandles>(null);
 
-  const { createToast, loadToast } = useToast();
-
+  const { createToast, removeToast } = useToast();
   const { signIn } = useAuth();
+  const history = useHistory();
 
   const handleSubmit = async (data: Data) => {
     try {
@@ -52,7 +53,13 @@ const Login: React.FC = ({}) => {
 
       await schema.validate(data, { abortEarly: false });
 
-      loadToast(signIn, data);
+      createToast("Loading...", "loading");
+
+      await signIn(data);
+
+      removeToast();
+
+      history.push("/home");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const validationErrors: Errors = {};
@@ -60,6 +67,7 @@ const Login: React.FC = ({}) => {
           validationErrors[error.path!] = error.message;
         });
         formRef.current?.setErrors(validationErrors);
+        removeToast();
         return createToast(error.errors[0], "error");
       }
     }

@@ -5,11 +5,10 @@ import toast, { Toaster } from "react-hot-toast";
 type Data = {
   createToast: (
     text: string,
-    type: "error" | "success",
+    type: "error" | "loading" | "success",
     style?: CSSProperties
   ) => void;
-
-  loadToast: (func: Function, data?: any) => void;
+  removeToast: () => void;
 };
 
 const ToastContext = createContext<Data>({} as Data);
@@ -17,7 +16,7 @@ const ToastContext = createContext<Data>({} as Data);
 export const ToastProvider: React.FC = ({ children }) => {
   function createToast(
     text: string,
-    type: "error" | "success",
+    type: "error" | "loading" | "success",
     style: CSSProperties = {}
   ) {
     switch (type) {
@@ -25,6 +24,13 @@ export const ToastProvider: React.FC = ({ children }) => {
         toast.error(text, {
           style,
         });
+        break;
+
+      case "loading":
+        toast.loading(text, {
+          style,
+        });
+
         break;
 
       case "success":
@@ -38,16 +44,12 @@ export const ToastProvider: React.FC = ({ children }) => {
     }
   }
 
-  function loadToast(func: Function, data?: any) {
-    toast.promise(func(data), {
-      loading: "Saving...",
-      success: <b>Saved with success!</b>,
-      error: <b>An error has occurred!</b>,
-    });
+  function removeToast() {
+    toast.remove();
   }
 
   return (
-    <ToastContext.Provider value={{ createToast, loadToast }}>
+    <ToastContext.Provider value={{ createToast, removeToast }}>
       {children}
       <Toaster />
     </ToastContext.Provider>

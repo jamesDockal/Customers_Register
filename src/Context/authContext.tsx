@@ -10,7 +10,7 @@ type User = {
 
 interface AuthContextData {
   token: string;
-  signIn: (user: User) => void;
+  signIn: (user: User) => Promise<void>;
   signOut: () => void;
 }
 
@@ -23,8 +23,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     return token;
   });
 
-  const signIn = useCallback(async (data) => {
-    const token = uuidv4();
+  const signIn = async (data: User) => {
+    const token = await uuidv4();
     await api.post("/usuarios", {
       ...data,
       id: token,
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem("token", token);
 
     setToken(token);
-  }, []);
+  };
 
   const signOut = useCallback(() => {
     localStorage.removeItem("token");
