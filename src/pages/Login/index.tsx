@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
+
+import * as Yup from "yup";
+import { FormHandles } from "@unform/core";
 
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -15,12 +18,55 @@ import {
   PasswordInput,
   ButtonText,
 } from "./styles";
+import { useToast } from "../../Context/toastContext";
+import { useAuth } from "../../Context/authContext";
+
+interface Errors {
+  [key: string]: string;
+}
+
+type Data = {
+  email: string;
+  password: string;
+};
 
 const Login: React.FC = ({}) => {
-  const handleSubmit = async (data: any) => {};
+  const formRef = useRef<FormHandles>(null);
+
+  const { createToast, loadToast } = useToast();
+
+  const { signIn } = useAuth();
+
+  const handleSubmit = async (data: Data) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required("Email é Obrigatorio!")
+          .email("Formato do email inválido"),
+        password: Yup.string()
+          .required("Senha é Obrigatorio!")
+          .min(4, "A senha deve ter no mínimo 4 caracteres!"),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+
+      loadToast(signIn, data);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const validationErrors: Errors = {};
+        error.inner.forEach((error: Yup.ValidationError) => {
+          validationErrors[error.path!] = error.message;
+        });
+        formRef.current?.setErrors(validationErrors);
+        return createToast(error.errors[0], "error");
+      }
+    }
+  };
 
   return (
-    <Container onSubmit={handleSubmit}>
+    <Container onSubmit={handleSubmit} ref={formRef}>
       <LeftContent />:
       <RightContent>
         <LoginForm>
